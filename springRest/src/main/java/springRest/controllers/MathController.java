@@ -11,11 +11,30 @@ public class MathController {
 	
 	@RequestMapping("/sum/{numberOne}/{numberTwo}")
 	public Double sum(
-			
-			@PathVariable String numberOne,
-			@PathVariable String numberTwo
-	) {
-		return 1D;
+			@PathVariable("numberOne") String numberOne,
+			@PathVariable("numberTwo") String numberTwo
+	) throws Exception {
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new IllegalArgumentException();
+		}
+		return converterToDouble(numberOne) + converterToDouble(numberTwo);
+	}
+
+	private Double converterToDouble(String strNumber) {
+		if(strNumber == null || strNumber.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+		String number = strNumber.replace(",", ".");
+		 number.matches("^[0-9]+(\\.[0-9]+)?$");
+		return Double.valueOf(number);
+	}
+
+	private boolean isNumeric(String strNumber) {
+		if(strNumber == null || strNumber.isEmpty()) {
+			return false;
+		}
+		String number = strNumber.replace(",", ".");
+		return ( number.matches("^[0-9]+(\\.[0-9]+)?$"));
 	}
 
 }
