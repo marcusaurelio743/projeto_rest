@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import springRest.exeption.MathOperationExeption;
+
 @RestController
 @RequestMapping("/math")
 public class MathController {
@@ -15,14 +17,14 @@ public class MathController {
 			@PathVariable("numberTwo") String numberTwo
 	) throws Exception {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new IllegalArgumentException();
+			throw new MathOperationExeption("O valor Informado é invalido");
 		}
 		return converterToDouble(numberOne) + converterToDouble(numberTwo);
 	}
 
 	private Double converterToDouble(String strNumber) {
 		if(strNumber == null || strNumber.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new MathOperationExeption("O valor Informado é invalido");
 		}
 		String number = strNumber.replace(",", ".");
 		 number.matches("^[0-9]+(\\.[0-9]+)?$");
