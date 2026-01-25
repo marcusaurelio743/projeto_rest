@@ -21,6 +21,46 @@ public class MathController {
 		}
 		return converterToDouble(numberOne) + converterToDouble(numberTwo);
 	}
+	
+	@RequestMapping("/sub/{numberOne}/{numberTwo}")
+	public Double sub(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new MathOperationExeption("O valor Informado é invalido");
+		}
+		return converterToDouble(numberOne) - converterToDouble(numberTwo);
+	}
+	@RequestMapping("/multi/{numberOne}/{numberTwo}")
+	public Double multi(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new MathOperationExeption("O valor Informado é invalido");
+		}
+		return converterToDouble(numberOne) * converterToDouble(numberTwo);
+	}
+	
+	@RequestMapping("/div/{numberOne}/{numberTwo}")
+	public Double div(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new MathOperationExeption("O valor Informado é invalido");
+		}
+		return converterToDouble(numberOne) / converterToDouble(numberTwo);
+	}
+	
+	@RequestMapping("/media/{numberOne}/{numberTwo}")
+	public Double media(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
+		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
+			throw new MathOperationExeption("O valor Informado é invalido");
+		}
+		return (converterToDouble(numberOne) + converterToDouble(numberTwo))/2;
+	}
+	
+	@RequestMapping("/raiz/{number}")
+	public Double raiz(@PathVariable String number) throws Exception{
+		if(!isNumeric(number)) {
+			throw new MathOperationExeption("O valor Informado é invalido");
+		}
+		return Math.sqrt(converterToDouble(number));
+	}
+	
 
 	private Double converterToDouble(String strNumber) {
 		if(strNumber == null || strNumber.isEmpty()) {
