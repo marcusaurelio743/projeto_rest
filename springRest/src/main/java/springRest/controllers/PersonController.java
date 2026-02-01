@@ -1,5 +1,7 @@
 package springRest.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,16 @@ public class PersonController {
 	
 	public Person findById(@PathVariable("id") String id) {
 		return services.findById(id);
+		
+	}
+	
+	@RequestMapping(
+			method = RequestMethod.GET,
+			produces = MediaType.APPLICATION_JSON_VALUE
+			)
+	
+	public List<Person> findALL() {
+		return services.findAll();
 		
 	}
 
