@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import springRest.exeption.MathOperationExeption;
+import springRest.exeption.ResourceNotFoundException;
 import springRest.exeption.ResponseExeption;
 
 @ControllerAdvice
@@ -26,7 +26,7 @@ public class CustonEntityResponseHandle extends ResponseEntityExceptionHandler {
 		return ResponseEntity.internalServerError().body(exeption);
 	}
 	
-	@ExceptionHandler(MathOperationExeption.class)
+	@ExceptionHandler(ResourceNotFoundException.class)
 	public final ResponseEntity<ResponseExeption> MathOperationExeption(Exception ex,WebRequest web){
 		ResponseExeption exeption = new ResponseExeption(
 				new Date()

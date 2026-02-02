@@ -1,69 +1,58 @@
 package springRest.services;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import springRest.exeption.ResourceNotFoundException;
 import springRest.model.Person;
+import springRest.repository.PersonRepository;
 
 @Service
 public class PersonServices {
 	
-	private final AtomicLong counter = new AtomicLong();
+	@Autowired
+	PersonRepository personRepository;
+	
 	
 	private Logger logger = Logger.getLogger(PersonServices.class.getName());
 	
-	public Person findById(String id) {
+	
+	public Person findById(Long id) {
 		logger.info("find one person!!");
 		
-		Person person = new Person();
-		person.setId(counter.incrementAndGet());
-		person.setFirstName("Marcus");
-		person.setLastName("Aurélio");
-		person.setAddress("Novo gama GO");
-		person.setGander("Pedregal");
-		
-		return person;
+		return personRepository.findById(id).
+				orElseThrow(()->new ResourceNotFoundException("Objeto não encontrado!!"));
 	}
 	
 	public List<Person> findAll(){
-		List<Person> persons = new ArrayList<Person>();
-		
-		for (int i = 0; i < 8; i++) {
-			Person person = mockPerson(i);
-			persons.add(person);
-		}
-		
-		return persons;
+		return personRepository.findAll();
 	}
 	
 	public Person create(Person person) {
 		logger.info("Create Person!!!");
-		return person;
+		return personRepository.save(person);
 	}
 	
-	public Person update(Person person) {
+	public Person update(Person person,Long id) {
 		logger.info("Update Person!!!");
-		return person;
+		Person obj = findById(id);
+		
+		obj.setAddress(person.getAddress());
+		obj.setFirstName(person.getFirstName());
+		obj.setLastName(person.getLastName());
+		obj.setGander(person.getGander());
+		
+		return personRepository.save(obj);
 	}
 	public void deleteById(Long id) {
 		logger.info("Delete Person!!!");
+		personRepository.deleteById(id);
 	}
 	
 
-	private Person mockPerson(int i) {
-		logger.info("find one person MOKS!!");
-		
-		Person person = new Person();
-		person.setId(counter.incrementAndGet());
-		person.setFirstName("Name: "+i);
-		person.setLastName("Last: "+i);
-		person.setAddress("Address: "+i);
-		person.setGander("Gandre: "+i);
-		return person;
-	}
+	
 
 }

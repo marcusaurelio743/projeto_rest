@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import springRest.exeption.MathOperationExeption;
+import springRest.exeption.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/math")
@@ -17,7 +17,7 @@ public class MathController {
 			@PathVariable("numberTwo") String numberTwo
 	) throws Exception {
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		return converterToDouble(numberOne) + converterToDouble(numberTwo);
 	}
@@ -25,14 +25,14 @@ public class MathController {
 	@RequestMapping("/sub/{numberOne}/{numberTwo}")
 	public Double sub(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		return converterToDouble(numberOne) - converterToDouble(numberTwo);
 	}
 	@RequestMapping("/multi/{numberOne}/{numberTwo}")
 	public Double multi(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		return converterToDouble(numberOne) * converterToDouble(numberTwo);
 	}
@@ -40,7 +40,7 @@ public class MathController {
 	@RequestMapping("/div/{numberOne}/{numberTwo}")
 	public Double div(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		return converterToDouble(numberOne) / converterToDouble(numberTwo);
 	}
@@ -48,7 +48,7 @@ public class MathController {
 	@RequestMapping("/media/{numberOne}/{numberTwo}")
 	public Double media(@PathVariable String numberOne, @PathVariable String numberTwo) throws Exception{
 		if(!isNumeric(numberOne) || !isNumeric(numberTwo)) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		return (converterToDouble(numberOne) + converterToDouble(numberTwo))/2;
 	}
@@ -56,7 +56,7 @@ public class MathController {
 	@RequestMapping("/raiz/{number}")
 	public Double raiz(@PathVariable String number) throws Exception{
 		if(!isNumeric(number)) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		return Math.sqrt(converterToDouble(number));
 	}
@@ -64,7 +64,7 @@ public class MathController {
 
 	private Double converterToDouble(String strNumber) {
 		if(strNumber == null || strNumber.isEmpty()) {
-			throw new MathOperationExeption("O valor Informado é invalido");
+			throw new ResourceNotFoundException("O valor Informado é invalido");
 		}
 		String number = strNumber.replace(",", ".");
 		 number.matches("^[0-9]+(\\.[0-9]+)?$");
